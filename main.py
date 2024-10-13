@@ -1,5 +1,6 @@
 import pygame
-from constants import *
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from player import Player
 
 def main():
     pygame.init()
@@ -7,6 +8,12 @@ def main():
 
     clock = pygame.time.Clock()
     dt = 0
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    updatable.add(player)
+    drawable.add(player)
 
     running = True
     while running:
@@ -14,10 +21,18 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill((0, 0, 0))
+        screen.fill("black")
+
+        for thing in drawable:
+            thing.draw(screen)
+        for thing in updatable:
+            thing.update(dt)
+
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000
+
+
 
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
