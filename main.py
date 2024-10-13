@@ -53,6 +53,12 @@ def main():
                 pygame.time.wait(3000)
                 running = False
 
+        for asteroid in asteroids_group:
+            for shot in shots_group:
+                if asteroid.collide(shot):
+                    asteroid.split()
+                    asteroid.kill()
+                    shot.kill()
 
         pygame.display.flip()
 
